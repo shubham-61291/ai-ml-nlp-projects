@@ -1,4 +1,5 @@
 Sentiment Analysis & Churn Rate Prediction
+
 This project applies AI/ML to analyze Net Promoter Score (NPS) feedback data from students/parents in the EdTech sector. The goal is twofold:
 1.	Sentiment Analysis – Classify feedback into Negative, Neutral, and Positive sentiments.
 2.	Churn Prediction – Estimate iteration (churn) rate directly from detractor proportion in NPS.
