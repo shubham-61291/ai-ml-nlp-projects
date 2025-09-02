@@ -1,0 +1,101 @@
+student_id,nps_score,feedback_text
+1,10,"The app is amazing, my child improved a lot!"
+2,0,"Not worth the money, very disappointing."
+3,3,Teachers don’t explain properly.
+4,2,"Too many bugs, keeps crashing."
+5,10,The content is interactive and motivating.
+6,1,Customer support never responds.
+7,6,"Too many bugs, keeps crashing."
+8,0,"Too many bugs, keeps crashing."
+9,3,Teachers don’t explain properly.
+10,8,"It's acceptable, not too good or bad."
+11,0,Customer support never responds.
+12,3,Customer support never responds.
+13,6,Teachers don’t explain properly.
+14,7,"It's acceptable, not too good or bad."
+15,4,"Too many bugs, keeps crashing."
+16,2,"Hard to navigate, poor UX."
+17,5,"Not worth the money, very disappointing."
+18,2,Teachers don’t explain properly.
+19,5,"Too many bugs, keeps crashing."
+20,1,"Hard to navigate, poor UX."
+21,1,"Not worth the money, very disappointing."
+22,5,Customer support never responds.
+23,4,"Too many bugs, keeps crashing."
+24,7,"It's acceptable, not too good or bad."
+25,1,"Hard to navigate, poor UX."
+26,1,Customer support never responds.
+27,4,Customer support never responds.
+28,5,Customer support never responds.
+29,3,"Too many bugs, keeps crashing."
+30,0,Teachers don’t explain properly.
+31,4,"Too many bugs, keeps crashing."
+32,3,"Too many bugs, keeps crashing."
+33,6,"Not worth the money, very disappointing."
+34,7,"Average experience, can be improved."
+35,2,"Not worth the money, very disappointing."
+36,5,Teachers don’t explain properly.
+37,10,"Great experience, engaging and fun learning."
+38,10,"The app is amazing, my child improved a lot!"
+39,9,"Very clear explanations, I love the teachers."
+40,8,Sometimes useful but sometimes confusing.
+41,2,"Hard to navigate, poor UX."
+42,6,"Not worth the money, very disappointing."
+43,10,The content is interactive and motivating.
+44,3,"Not worth the money, very disappointing."
+45,0,Teachers don’t explain properly.
+46,0,"Not worth the money, very disappointing."
+47,6,"Not worth the money, very disappointing."
+48,1,Teachers don’t explain properly.
+49,9,"Great experience, engaging and fun learning."
+50,3,"Hard to navigate, poor UX."
+51,6,"Hard to navigate, poor UX."
+52,2,"Not worth the money, very disappointing."
+53,2,Teachers don’t explain properly.
+54,8,"It's acceptable, not too good or bad."
+55,4,Customer support never responds.
+56,6,Customer support never responds.
+57,6,"Not worth the money, very disappointing."
+58,3,Teachers don’t explain properly.
+59,8,"The pace is fine, but clarity can be better."
+60,1,"Too many bugs, keeps crashing."
+61,1,Teachers don’t explain properly.
+62,10,"Very clear explanations, I love the teachers."
+63,10,Customer support is very helpful.
+64,9,"The app is amazing, my child improved a lot!"
+65,6,"Hard to navigate, poor UX."
+66,9,Customer support is very helpful.
+67,8,"Average experience, can be improved."
+68,8,"The app is okay, nothing special."
+69,10,"The app is amazing, my child improved a lot!"
+70,10,The content is interactive and motivating.
+71,4,"Not worth the money, very disappointing."
+72,1,"Not worth the money, very disappointing."
+73,6,Teachers don’t explain properly.
+74,7,"The app is okay, nothing special."
+75,4,Customer support never responds.
+76,2,Customer support never responds.
+77,1,"Not worth the money, very disappointing."
+78,10,The content is interactive and motivating.
+79,9,"Very clear explanations, I love the teachers."
+80,2,"Not worth the money, very disappointing."
+81,2,Customer support never responds.
+82,8,"The app is okay, nothing special."
+83,9,"Great experience, engaging and fun learning."
+84,7,"The app is okay, nothing special."
+85,1,"Not worth the money, very disappointing."
+86,4,Teachers don’t explain properly.
+87,0,Teachers don’t explain properly.
+88,9,"The app is amazing, my child improved a lot!"
+89,1,"Hard to navigate, poor UX."
+90,1,Customer support never responds.
+91,2,Teachers don’t explain properly.
+92,10,Customer support is very helpful.
+93,8,Sometimes useful but sometimes confusing.
+94,4,Customer support never responds.
+95,9,Customer support is very helpful.
+96,3,Customer support never responds.
+97,3,"Not worth the money, very disappointing."
+98,6,"Not worth the money, very disappointing."
+99,7,"It's acceptable, not too good or bad."
+100,7,"The app is okay, nothing special."
