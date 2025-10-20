@@ -53,6 +53,32 @@ Libraries: Hugging Face Transformers, Datasets, Accelerate, Matplotlib, Seaborn
 
 Techniques: NLP classification, retention curve modeling, generative reasoning (T5), sentiment & churn analytics
 
+5. 🧠 AttritionX – Employee Attrition Prediction
+
+A triangulated ML framework to predict employee attrition using Logistic Regression, CatBoost, and Neural Networks (Keras).
+
+⚙️ Approach:
+
+Triangulated feature selection combining SHAP, Permutation Importance, and VIF.
+
+Independent model pipelines with cross-validation, threshold tuning, and MLflow tracking.
+
+Interactive Gradio interface for prediction and explainability.
+
+📊 Highlights:
+
+Logistic Regression → Statistical baseline for interpretability
+
+CatBoost → Handles categorical features natively with stable recall
+
+Neural Network → Deep model for non-linear HR patterns
+
+Tuned thresholds and recall calibration for HR decision support
+
+💡 Key Insight:
+CatBoost was selected as the central model for its native categorical handling, stable AUC (≈ 0.83–0.84), and explainability via SHAP.
+All models embed confusion matrices, ROC/PR curves, and SHAP plots directly into reports for visual interpretability.
+
 👤 Author
 
 Shubham Singh
