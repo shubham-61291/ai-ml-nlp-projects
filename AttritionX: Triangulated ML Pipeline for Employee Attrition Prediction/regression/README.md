@@ -29,7 +29,7 @@ It includes complete evaluation steps: cross-validation, ROC/PR curves, confusio
 ### ROC & PR Curves
 ![ROC Curve — Validation](roc_curve_validation.png)
 ![ROC Curve — Test](roc_curve_test.png)
-![Precision–Recall Curve — Validation](precission_recall_curve.png)
+![Precision–Recall Curve — Validation](precision_recall_curve.png)
 ![Precision–Recall Threshold Comparison](precision_recall_curve_thershold_comparison.png)
 
 ---
