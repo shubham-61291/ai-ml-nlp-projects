@@ -20,7 +20,7 @@ It includes complete evaluation steps: cross-validation, ROC/PR curves, confusio
 ## 📊 Model Evaluation Results
 
 ### Confusion Matrices
-![Confusion Matrix — Train](confusion_matrix_train.png)
+![Confusion Matrix — Train](confusion_matrix_training.png)
 ![Confusion Matrix — Validation](confusion_matrix_validation.png)
 ![Confusion Matrix — Test](confusion_matrix_test.png)
 
