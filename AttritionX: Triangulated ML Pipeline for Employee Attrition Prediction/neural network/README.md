@@ -31,7 +31,7 @@ It combines explainability (SHAP + Permutation + VIF), MLflow tracking, and Grad
 ![ROC Curve — Validation](roc_curve_validation.png)
 ![ROC Curve — Test](roc_curve_test.png)
 ![Precision–Recall Curve](precision_recall_curve.png)
-![PR Threshold Comparison](precision_recall_curve_threshold_comparison.png)
+![PR Threshold Comparison](precision_recall_curve_thershold_comparison.png)
 ![ROC Threshold Comparison](roc_curve_threshold_comparison.png)
 
 ---
