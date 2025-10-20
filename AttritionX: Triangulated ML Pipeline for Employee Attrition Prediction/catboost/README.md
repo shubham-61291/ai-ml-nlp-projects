@@ -36,7 +36,7 @@ It includes end-to-end model tuning, validation, and interpretability with calib
 ![ROC Curve — Validation (Final)](ROC_validation_final.png)
 ![ROC Curve — Test (Final)](roc_test_final.png)
 ![Precision–Recall Curve — Validation](precision_recall_validation.png)
-![Precision–Recall Threshold Comparison](precision_recall_curve_threshold_comparison.png)
+
 
 ---
 
