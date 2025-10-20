@@ -21,7 +21,6 @@ It includes end-to-end model tuning, validation, and interpretability with calib
 
 ### Confusion Matrices
 ![Confusion Matrix — Train (Base)](confusion_matrix_train_base.png)
-![Confusion Matrix — Validation (Base)](confusion_matrix_validation_base.png)
 ![Confusion Matrix — Test (Base)](confusion_matrix_test_base.png)
 ![Confusion Matrix — Train (Final)](confusion_matrix_train_final.png)
 ![Confusion Matrix — Validation (Final)](confusion_matrix_validation_final.png)
