@@ -1,59 +1,77 @@
-MathGPT & TeacherGPT
-📌 Overview
-This repository contains two interconnected projects:
-1.	MathGPT → A domain-specific reasoning model fine-tuned on textbook-style math problems (linear equations, quadratics, fractions, geometry, probability, etc.).
-2.	TeacherGPT → An AI tutoring assistant built on top of MathGPT, designed to provide step-by-step guided explanations through a simple front-end interface.
-Both projects are powered by FLAN-T5 (Google’s instruction-tuned encoder–decoder model), trained and optimized for mathematical reasoning tasks.
-________________________________________
-⚙️ Project Workflow
-Step 1 — Load & Clean Dataset
-•	Dataset: mathgpt_dataset.csv
-•	Contains 108 structured math problems across 9 categories.
-•	Cleaning removes duplicates, trims whitespace, and normalizes columns (problem, solution).
-________________________________________
-Step 2 — Dataset & DataLoader Prep
-•	Tokenization using google/flan-t5-small.
-•	Problems framed as “Solve step by step”.
-•	Custom PyTorch Dataset + DataLoader.
-•	90/10 split for training and validation.
-________________________________________
-Step 3 — Training Loop
-•	Model: FLAN-T5 Small (T5ForConditionalGeneration).
-•	Optimizer: AdamW (lr=5e-5).
-•	Loss: Cross-entropy (ignoring pad tokens).
-•	Epochs: 50.
-•	Checkpoints saved under mathgpt_flan_t5_small/.
-Loss Curve (Training vs Validation):
-![](linechart.png)
-________________________________________
-Step 4 — Optimized Inference
-•	Few-shot prompting added for better reasoning.
-•	Beam search (num_beams=10) with repetition penalty.
-•	Encourages multi-step explanations instead of single-line answers.
-________________________________________
-🧑‍🏫 TeacherGPT — Math Reasoning Assistant
-TeacherGPT wraps MathGPT into a tutoring interface.
-Features
-•	Accepts natural math queries.
-•	Returns guided, step-by-step explanations.
-•	Can be deployed as a Gradio app for interactive tutoring.
-________________________________________
-📂 Repository Structure
-├── mathgpt_dataset.csv             # Original dataset (108 problems)
-├── mathgpt_dataset_clean.csv       # Cleaned dataset
-├── mathsgpt_&_teachergpt.py        # End-to-end pipeline (MathGPT + TeacherGPT)
-├── linechart.png                   # Training vs Validation loss curve
-├── README.md                       # Project documentation
-________________________________________
-🚀 Future Work
-•	Expand dataset beyond 108 problems for stronger generalization.
-•	Add categories: calculus, combinatorics, word problems.
-•	Deploy TeacherGPT as a persistent tutoring assistant.
-•	Experiment with larger FLAN-T5 (base/large) on GPU clusters.
-________________________________________
-👤 Author
-Shubham Singh
+# MathGPT & TeacherGPT — FLAN-T5 Math Generation and Tutoring Interface
 
-________________________________________
-📜 License
-MIT License 
+This project explores fine-tuning the `google/flan-t5-small` encoder-decoder model to generate step-by-step solutions for math problems, then wrapping the trained checkpoint in a simple TeacherGPT Gradio interface.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
+## Workflow
+
+1. Load `mathgpt_dataset.csv`, normalize the column names, keep `problem` and `solution`, remove empty/duplicate problems, and write `mathgpt_dataset_clean.csv`.
+2. Tokenize prompts prefixed with `Solve step by step:` and target solutions.
+3. Fine-tune `google/flan-t5-small` with PyTorch/AdamW; the source configures 50 epochs and a 90/10 train/validation split.
+4. Load the saved `mathgpt_flan_t5_small` checkpoint for generation, including few-shot examples and beam-search settings.
+5. Define a Gradio interface that accepts a math problem and displays the generated solution.
+
+## Repository contents and missing prerequisites
+
+| File or artifact | Status in current repository snapshot |
+|---|---|
+| `mathsgpt_&_teachergpt.py` | Training, generation, and UI code exported from Colab |
+| `linechart.png` | Training-versus-validation loss image |
+| `mathgpt_dataset.csv` | Expected input; not present in the project directory listing |
+| `mathgpt_dataset_clean.csv` | Generated during data preparation; not present in the project directory listing |
+| `mathgpt_flan_t5_small/` | Expected trained checkpoint/tokenizer directory; not present in the project directory listing |
+
+**The project is not runnable end to end from the checked-in files alone.** The dataset and saved model/tokenizer checkpoint need to be supplied or recreated. Additionally, `demo.launch()` is commented out in the checked-in script, so the Gradio interface does not start automatically when the file reaches its last line.
+
+## Expected dataset schema
+
+The input CSV must contain two columns (column names are normalized to lowercase):
+
+- `problem` — math question or exercise text.
+- `solution` — target worked solution used during fine-tuning.
+
+The existing README describes a small textbook-style dataset, but that CSV is absent from the repository inventory, so its size, licensing, provenance, category balance, and quality cannot be independently verified from the checked-in files.
+
+## Environment and execution
+
+Core libraries used by the source include `pandas`, `torch`, `transformers`, `sentencepiece`, `matplotlib`, and `gradio`. The script is exported from a Colab notebook and calls `display()`, so use it as ordered notebook cells or adapt notebook-only behavior for a conventional Python environment.
+
+To reproduce the workflow, provide the dataset, run the cleaning and training stages in order, confirm the checkpoint directory is created, then uncomment or explicitly launch the Gradio app after loading the saved model.
+
+## Limitations
+
+- Generated math solutions can contain arithmetic or reasoning errors and are not verified by a symbolic math engine or formal test suite.
+- The dataset and checkpoint are not supplied in this repository snapshot, limiting independent reproduction.
+- The Gradio launcher is commented out, and the TeacherGPT stage assumes that a valid trained checkpoint already exists.
+- Training/runtime requirements vary by hardware; GPU execution is optional in the source but may materially affect training time.
+
+## Author
+
+**Shubham Kumar Singh**
+
+## License
+
+This project is licensed under the MIT License. The complete license is available in [`LICENSE`](./LICENSE) and reproduced below.
+
+MIT License
+
+Copyright (c) 2026 Shubham Kumar Singh
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
