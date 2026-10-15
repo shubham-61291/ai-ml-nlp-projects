@@ -1,62 +1,76 @@
-Automated Content Tagging Pipeline
-This project implements an AI-powered tagging system for educational content. It classifies topics into subjects (Mathematics, Biology, Physics, Chemistry, History) and provides a baseline difficulty level (Easy, Medium, Hard). The tagging pipeline forms the foundation for mars_–_memory_and_retention_scheduling.
-________________________________________
-📌 Project Overview
-Objective: Automatically tag learning topics with subject and difficulty to support adaptive retention scheduling.
-Datasets:
-•	topics.csv → Raw topic metadata (title, description).
-•	topics_with_tags.csv → Topics with subject, difficulty, and tag labels.
-•	topics_predicted_subjects.csv → Pipeline output with predicted subject tags.
-Outputs:
-•	Subject classification reports (baseline + transformer).
-•	Confusion matrices for evaluation.
-•	Train vs validation loss curves.
-________________________________________
-⚡ Features
-•	Baseline Model → TF-IDF + Logistic Regression.
-•	Transformer Model → DistilBERT fine-tuned on subject classification.
-•	Balanced synthetic dataset → 50 topics (10 per subject).
-•	Colab-ready training loop (no tokens, no external logging).
-•	Export predictions for downstream integration with BADRI.
-________________________________________
-📊 Results
-1.	Baseline TF-IDF Model
-o	Accuracy: 100% (due to separable synthetic dataset).
-o	Confusion Matrix: Perfect diagonal classification.
-![](simplemethod.png)
-2.	DistilBERT Fine-Tuning
-o	Trained for 4 epochs with manual PyTorch loop.
-o	Loss decreased consistently (no overfitting).
-o	Confusion Matrix: Perfect subject classification.
-Loss Curve:
-![](LINECHART.png)
-Confusion Matrix:
-![](DISTILBERT.png)
-________________________________________
-🚀 Project Workflow
-1.	Data Preparation
-o	Generate balanced dataset (50 topics across 5 subjects).
-o	Assign baseline difficulty levels.
-2.	Baseline Classifier
-o	TF-IDF feature extraction.
-o	Logistic Regression for subject classification.
-3.	Transformer Training
-o	DistilBERT with manual training loop.
-o	Track train/val loss, evaluate on test.
-4.	Prediction Export
-o	Save topics_predicted_subjects.csv for BADRI integration.
-________________________________________
-📂 Project Structure
-├── topics.csv                     # Raw topics
-├── topics_with_tags.csv            # Topics with subject/difficulty
-├── topics_predicted_subjects.csv   # Predictions from pipeline
-├── simplemethod.png                # Baseline TF-IDF confusion matrix
-├── LINECHART.png                   # DistilBERT loss curve
-├── DISTILBERT.png                  # DistilBERT confusion matrix
-└── README.md                       # Project documentation
-________________________________________
-👤 Author
-Shubham Singh
-________________________________________
-📜 License
-MIT License.
+# Automated Content Tagging Pipeline — NLP Classification of Learning Material
+
+This project classifies learning-topic text by subject using a classical TF-IDF baseline and a fine-tuned DistilBERT sequence classifier. It also exports predicted subject labels for use by downstream learning workflows.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
+## Scope
+
+The source data combines `title` and `description` into a text field and uses `subject` as the supervised target. The five subject labels represented in the checked-in data are Mathematics, Biology, Physics, History, and Chemistry, with 50 templated topic rows in total.
+
+The script includes two approaches:
+
+1. **Baseline:** `TfidfVectorizer` with Logistic Regression, followed by a classification report and confusion matrix.
+2. **Transformer:** `distilbert-base-uncased` fine-tuned with a manual PyTorch loop for four epochs, using a stratified 80/10/10 train/validation/test split and reporting accuracy, macro-F1, a confusion matrix, and train/validation loss.
+
+The script maps difficulty labels to an ordinal code during data preparation, but the trained classifiers described here target **subject classification**, not a separately trained difficulty-prediction model.
+
+## Included data and outputs
+
+| File | Purpose |
+|---|---|
+| `topics.csv` | Topic ID, title, and description; 50 rows |
+| `topics_with_tags.csv` | Subject, difficulty, and tag labels aligned by `topic_id` |
+| `topics_predicted_subjects.csv` | Checked-in subject predictions for the topic rows |
+| `simplemethod.png` | Baseline confusion-matrix plot |
+| `LINECHART.png` | DistilBERT train/validation loss plot |
+| `DISTILBERT.png` | DistilBERT confusion-matrix plot |
+| `automated_content_tagging_pipeline_→_nlp_classification_of_learning_material.py` | Combined training/evaluation notebook export |
+
+## Run in Google Colab
+
+The checked-in source was exported from a Colab notebook. It includes `!pip` installation commands, `/content/...` paths, and `display()` calls, so it is not a plain standalone Python script as committed.
+
+1. Create a Colab notebook and upload or copy `topics.csv` and `topics_with_tags.csv` into `/content/`.
+2. Install the dependencies used by the relevant cells: `pandas`, `scikit-learn`, `seaborn`, `matplotlib`, `torch`, `transformers`, `datasets`, and `accelerate`.
+3. Run the baseline and transformer sections in order. The transformer section downloads the public `distilbert-base-uncased` model from Hugging Face and requires network access on first use.
+4. The final export cell writes `topics_predicted_subjects.csv` to the active notebook working directory.
+
+For local execution, remove the notebook-only `!pip` statements, replace `/content/` paths with normal paths, and provide an appropriate Python environment. That conversion is not part of the checked-in source.
+
+## Evaluation and limitations
+
+- The checked-in topic text is templated and highly separable by subject words. Very high or perfect metrics on this dataset are not evidence of production-grade subject classification.
+- The test split is small (about five examples under the documented split), so metrics have high sampling uncertainty.
+- The current pipeline does not implement a separately validated personalized difficulty model, adaptive learning policy, or learner-outcome evaluation.
+- The predicted CSV is a saved output artifact; it is not proof that the full training pipeline has been rerun against the current environment.
+
+## Author
+
+**Shubham Kumar Singh**
+
+## License
+
+This project is licensed under the MIT License. The complete license is available in [`LICENSE`](./LICENSE) and reproduced below.
+
+MIT License
+
+Copyright (c) 2026 Shubham Kumar Singh
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
