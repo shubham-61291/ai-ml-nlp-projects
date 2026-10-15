@@ -1,82 +1,101 @@
-# ⚡ AttritionX — Employee Attrition Prediction (Triangulated ML Framework)
+# AttritionX — Triangulated Employee Attrition Modeling
 
-This repository unifies three independent ML pipelines — **Logistic Regression**, **CatBoost**, and **Neural Network (Keras)** — designed to predict **employee attrition** using triangulated feature selection and explainable AI.  
-Each model complements the other: Logistic Regression provides interpretability, CatBoost ensures boosting efficiency, and Neural Network captures non-linear relationships.
+AttritionX groups three separate model experiments for employee-attrition classification: Logistic Regression, CatBoost, and a Keras neural network. The project compares modeling approaches and feature-screening signals rather than presenting a validated HR decision product.
 
----
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-## 🚀 Project Overview
-- **Objective:** Predict employee attrition using structured HR data  
-- **Models Used:** Logistic Regression · CatBoost · Neural Network (Keras)  
-- **Approach:** Triangulated feature selection (SHAP + Permutation + VIF)  
-- **Output:** Clean evaluation reports and explainable visuals for each model  
-- **Interface:** Interactive Gradio web app  
+## Problem and approach
 
----
+The goal is to estimate an employee attrition-risk class from structured HR features. The model branches explore:
 
-## 💡 Why CatBoost Was Chosen
-CatBoost was selected as the **central model** in AttritionX due to its ability to handle categorical variables efficiently and deliver consistent generalization across validation folds.
+- **Logistic Regression:** a statistical baseline with regularization and class-weight/threshold tuning.
+- **CatBoost:** gradient-boosted trees with parameter search and class weighting.
+- **Neural Network:** a feed-forward Keras model for nonlinear feature interactions.
+- **Feature triage:** triangulation of SHAP importance, permutation-based importance/AUC change, and VIF-based multicollinearity indicators.
+- **Evaluation:** training/validation/test confusion matrices, ROC and precision-recall plots, threshold comparisons, and selected experiment tracking/export utilities.
 
-| Advantage | Explanation |
-|------------|-------------|
-| **Handles Categorical Features Natively** | No need for one-hot encoding; avoids data leakage with ordered boosting. |
-| **Stable AUC & Recall** | Consistently achieves balanced precision-recall across test folds. |
-| **Interpretability via SHAP** | Produces clean, human-readable feature importance scores. |
-| **Fast Convergence** | Requires fewer iterations and hyperparameters than XGBoost or LightGBM. |
-| **Robust Under Class Imbalance** | Performs better than neural models when target distribution is skewed. |
+The three branches are separate experiments and should be assessed using their own README, requirements, preprocessing and evaluation notes. Reported numbers are historical run outputs and have not been reproduced as part of this README pass.
 
-In short, **CatBoost bridges the gap between statistical simplicity and deep-learning power**, making it the most balanced model for HR attrition analytics.
+## Model branches
 
----
+| Branch | Implementation | Supporting documentation |
+|---|---|---|
+| CatBoost | `catboost/catboost_final.py` | [CatBoost README](./catboost/README.md) |
+| Neural network | `neural network/regression_final.py` | [Neural-network README](./neural%20network/README.md) |
+| Logistic Regression | `regression/regression_final.py` | [Logistic-regression README](./regression/README.md) |
 
-## 🖼️ Image Embeddings for Explainability
-Each model generates visual outputs that are **embedded directly into reports** for interpretability and transparency.
+Each branch includes its own `requirements.txt` and evaluation images. Install dependencies from the branch you intend to inspect rather than assuming a single environment covers all three.
 
-| Visual Type | Purpose |
-|--------------|----------|
-| **Confusion Matrix** | Shows classification accuracy across true/false positives & negatives. |
-| **ROC & PR Curves** | Illustrate model trade-offs and optimal threshold selection. |
-| **SHAP Summary Plots** | Display feature impact magnitude and direction. |
-| **Triangulation Charts** | Show features dropped based on SHAP, AUC, and VIF agreement. |
+## Data and execution requirements
 
-These embedded visuals ensure that every performance metric and feature importance result is **visually auditable**, allowing HR analysts to interpret “why” behind each prediction.
+**The HR dataset is not included in this repository snapshot.** The model scripts load `/content/data_csv.csv`, a Google Colab-style path. You must provide an authorized dataset with the columns expected by the chosen branch and adjust the data path when running outside Colab.
 
----
+The Python files are notebook exports and contain notebook-specific installation commands such as `!pip install`. They are not directly executable with an ordinary `python script.py` invocation without first removing/converting notebook syntax and configuring local paths. Open the relevant file as notebook cells in Colab or convert it into a conventional Python module before local use.
 
-## 🧠 Model Structure
+Typical branch workflow:
 
-| Model | Core Technique | Key Strength | Performance Focus |
-|--------|----------------|---------------|-------------------|
-| Logistic Regression | Statistical Classification | High interpretability | Baseline calibration |
-| CatBoost | Gradient Boosting on Decision Trees | Balanced precision-recall | Primary production model |
-| Neural Network | Deep Feedforward (Keras) | Captures complex non-linearities | Enhanced recall stability |
+1. Open the branch directory and inspect its `requirements.txt` and README.
+2. Prepare the approved HR dataset and verify its schema, target definition, missing values, and class distribution.
+3. Run the preprocessing, split, training, validation, threshold-selection, and final test steps in the intended order.
+4. Review the saved evaluation plots and model metrics. Do not use the test set to tune the threshold.
 
----
+## Interpretation and limitations
 
-## 📊 Evaluation Summary
+- The repository snapshot does not include the source HR dataset, so results cannot be independently reproduced from the checked-in files alone.
+- Metrics reported in the existing branch READMEs differ by model version and run. Compare them only after aligning dataset, split, preprocessing, threshold-selection policy, and metric definitions.
+- The model interfaces add random noise/jitter to a displayed probability in the current code, so repeated UI probabilities may vary for the same inputs.
+- SHAP and permutation importance describe model behavior on the selected dataset; they do not establish causal explanations or absence of bias.
+- Employee data is sensitive. Use an approved, anonymized dataset and do not expose a public Gradio share URL with confidential inputs.
+- This project is an educational engineering demonstration. It is not independently validated for hiring, promotion, retention, termination, or other employment decisions. It must not be used as the sole basis for decisions about people.
 
-| Dataset | Model | AUC | F1 | Recall | Threshold |
-|----------|--------|-----|----|---------|------------|
-| Validation | CatBoost | 0.836 | 0.57 | 0.58 | 0.48 |
-| Validation | Neural Net | 0.815 | 0.55 | 0.54 | 0.55 |
-| Validation | Logistic Regression | 0.84 | 0.52 | 0.54 | 0.63 |
+## Repository contents
 
-All three models show **consistent validation behavior** with distinct trade-offs between interpretability and recall.
+```text
+AttritionX: Triangulated ML Pipeline for Employee Attrition Prediction/
+├── README.md
+├── catboost/
+│   ├── catboost_final.py
+│   ├── requirements.txt
+│   ├── README.md
+│   └── evaluation plots
+├── neural network/
+│   ├── regression_final.py
+│   ├── requirements.txt
+│   ├── README.md
+│   └── evaluation plots
+└── regression/
+    ├── regression_final.py
+    ├── requirements.txt
+    ├── README.md
+    └── evaluation plots
+```
 
----
+## Author
 
-## 🧩 Future Enhancements
-- Integrate **Optuna** for automated hyperparameter tuning  
-- Build an **ensemble meta-model** combining outputs from all three models  
-- Develop a **dashboard** for real-time attrition monitoring  
-- Deploy via **Streamlit Cloud** or **Hugging Face Spaces**
+**Shubham Kumar Singh**
 
----
+## License
 
-## 👨‍💻 Author
-**Shubham Singh**
+This project is licensed under the MIT License. The complete license is available in [`LICENSE`](./LICENSE) and reproduced below.
 
----
-
-## 📜 License
 MIT License
+
+Copyright (c) 2026 Shubham Kumar Singh
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
