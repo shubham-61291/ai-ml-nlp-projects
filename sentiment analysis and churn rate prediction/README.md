@@ -1,70 +1,81 @@
-Sentiment Analysis & Churn Rate Prediction
+# Sentiment Analysis & Churn-Rate Proxy from NPS Feedback
 
-This project applies AI/ML to analyze Net Promoter Score (NPS) feedback data from students/parents in the EdTech sector. The goal is twofold:
-1.	Sentiment Analysis – Classify feedback into Negative, Neutral, and Positive sentiments.
-2.	Churn Prediction – Estimate iteration (churn) rate directly from detractor proportion in NPS.
-We provide two complementary approaches:
-•	Baseline Model (Logistic Regression + TF-IDF) – interpretable, fast, effective on small data.
-•	Advanced Model (DistilBERT, Hugging Face Transformers) – contextual embeddings with early stopping, GPU acceleration, and higher accuracy.
-________________________________________
-📌 Project Overview
-Objective:
-Predict student/parent sentiment from feedback text and derive NPS + churn rate to inform business decisions.
-Dataset:
-•	nps_feedback.csv → Contains student_id, nps_score (0–10), and feedback_text.
-Outputs:
-•	Sentiment predictions (Negative / Neutral / Positive)
-•	Confusion matrices for both baseline and transformer models
-•	Training vs validation loss curve for DistilBERT
-•	NPS, churn rate (% of detractors), and retention rate
-________________________________________
-⚡ Features
-•	Baseline Sentiment Classifier: TF-IDF + Logistic Regression
-•	Advanced Sentiment Classifier: DistilBERT fine-tuned with Hugging Face
-•	80/10/10 Train–Validation–Test split
-•	Evaluation metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix
-•	Business Metrics: Net Promoter Score (NPS), Estimated Churn Rate, Retention Rate
-________________________________________
-📊 Results
-1. Confusion Matrix – Baseline Logistic Regression
-   ![](basicmodel.png)
-2. Confusion Matrix – DistilBERT
- ![](distilledBERTmodel.png)
-3. Training vs Validation Loss (DistilBERT with Early Stopping)
-![](linegraph.png)
-Metrics:
-•	Test accuracy (baseline): ~1.0 (on small sample)
-•	Test accuracy (DistilBERT): ~1.0 (perfect classification on test split)
-•	NPS ≈ Promoters % − Detractors %
-•	Iteration (Churn) Rate ≈ % of Detractors
-•	Retention Rate ≈ 100 − Churn Rate
-________________________________________
-🚀 Project Workflow
-Baseline Pipeline (sentiment_analysis_and_churn_rate_prediction.py):
-1.	Load NPS feedback data
-2.	Map NPS scores → Sentiment labels
-3.	TF-IDF vectorization of text
-4.	Train Logistic Regression model
-5.	Evaluate on validation and test sets
-6.	Plot confusion matrix
-Transformer Pipeline (DistilBERT):
-1.	Load and tokenize dataset
-2.	Convert to Hugging Face DatasetDict
-3.	Fine-tune DistilBERT for 3-class sentiment classification
-4.	Apply early stopping based on validation loss
-5.	Evaluate on test set and plot confusion matrix
-6.	Plot train vs validation loss curve
-________________________________________
-📂 Project Structure
-•	nps_feedback.csv – Raw NPS feedback data
-•	sentiment_analysis_and_churn_rate_prediction.py – Colab notebook with both models
-•	basic model.png – Confusion Matrix (Logistic Regression)
-•	distilledBERT model.png – Confusion Matrix (DistilBERT)
-•	line graph.png – Train vs Validation Loss Curve
-•	New Microsoft Word Document.DOCX – Project notes/draft
-________________________________________
-👤 Author
-Shubham Singh
-________________________________________
-📜 License
-MIT License.
+This project classifies feedback into Negative, Neutral, or Positive labels based on Net Promoter Score (NPS) thresholds, compares a TF-IDF/Logistic Regression baseline with a fine-tuned DistilBERT classifier, and computes summary NPS and detractor-rate indicators.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
+## Data and label rules
+
+The checked-in `nps_feedback.csv` has 100 records and these columns: `student_id`, `nps_score`, and `feedback_text`.
+
+The source assigns a sentiment label from `nps_score`:
+
+| NPS score | Assigned label |
+|---|---|
+| 0–6 | Negative |
+| 7–8 | Neutral |
+| 9–10 | Positive |
+
+This means the model target is a rule-derived label from the numerical NPS score; it is not an independently human-annotated sentiment label in the checked-in data.
+
+## Modeling workflow
+
+- **Baseline classifier:** TF-IDF features and Logistic Regression, with train/validation/test split, classification report, and confusion matrix.
+- **Transformer classifier:** `distilbert-base-uncased` fine-tuned with Hugging Face Transformers/Datasets and evaluated on a held-out test split. The source includes evaluation metrics and visual outputs.
+- **NPS and proxy metrics:** NPS = promoter percentage (scores 9–10) minus detractor percentage (scores 0–6). The script defines the estimated churn/“iteration” rate as the detractor percentage and estimated retention as 100% minus that rate.
+
+## Running in Google Colab
+
+The script is a Colab notebook export, with a `!pip install` command and paths such as `/content/nps_feedback.csv`. It is not directly executable unchanged with an ordinary Python interpreter.
+
+1. Open a new Google Colab notebook.
+2. Upload `nps_feedback.csv` into the runtime or update the data path.
+3. Install `pandas`, `numpy`, `torch`, `scikit-learn`, `seaborn`, `matplotlib`, `transformers`, `datasets`, `accelerate`, and `evaluate` as needed for the sections you run.
+4. Run the baseline and transformer cells in order; the transformer downloads `distilbert-base-uncased` on first use.
+5. Review the generated classification reports, confusion matrices, and loss plot.
+
+## Interpretation and limitations
+
+- The computed detractor fraction is an **NPS-derived proxy**, not a supervised model of observed future churn. The dataset does not include a separate outcome indicating whether a student or customer actually left.
+- Because target labels are defined from NPS score thresholds, high classification accuracy only shows reproduction of that rule on the selected split; it does not validate independent sentiment understanding or future churn prediction.
+- The dataset is small (100 rows), and test-set performance will be uncertain. Existing screenshots/results should not be interpreted as evidence of production generalization.
+- The current source focuses on model training and analysis rather than a production service. It does not provide an independently validated churn intervention policy.
+- NPS and retention definitions should be validated against the business's actual measurement practice before use in decisions.
+
+## Included artifacts
+
+- `nps_feedback.csv` — NPS feedback data.
+- `sentiment_analysis_and_churn_rate_prediction.py` — combined notebook export.
+- `basicmodel.png` — baseline confusion-matrix image.
+- `distilledBERTmodel.png` — DistilBERT confusion-matrix image.
+- `linegraph.png` — training/validation loss plot.
+
+## Author
+
+**Shubham Kumar Singh**
+
+## License
+
+This project is licensed under the MIT License. The complete license is available in [`LICENSE`](./LICENSE) and reproduced below.
+
+MIT License
+
+Copyright (c) 2026 Shubham Kumar Singh
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
